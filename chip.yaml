@@ -1,0 +1,117 @@
+float:
+  any:
+    DolphinnPy:
+      disabled: true
+      docker-tag: ann-benchmarks-dolphinn # Docker tag
+      module: ann_benchmarks.algorithms.dolphinnpy # Python class
+      constructor: DolphinnPy # Python class name
+      run-groups:
+        base:
+          args: [[10, 50, 100, 200, 1000, 2000]]
+    bruteforce:
+      disabled: true
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.bruteforce
+      constructor: BruteForce
+      base-args: ["@metric"]
+      run-groups:
+        empty:
+          args: []
+    bruteforce-blas:
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.bruteforce
+      constructor: BruteForceBLAS
+      base-args: ["@metric"]
+      run-groups:
+        empty:
+          args: []
+    dummy-algo-st:
+      disabled: true
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.dummy_algo
+      constructor: DummyAlgoSt
+      base-args: ["@metric"]
+      run-groups:
+        empty:
+          args: []
+    dummy-algo-mt:
+      disabled: true
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.dummy_algo
+      constructor: DummyAlgoMt
+      base-args: ["@metric"]
+      run-groups:
+        empty:
+          args: []
+    ball:
+      disabled: true
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.balltree
+      constructor: BallTree
+      base-args: ["@metric"]
+      run-groups:
+        ball:
+          args: &treeargs [[10, 20, 40, 100, 200, 400, 1000]]
+    trilat:
+      disabled: true
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.trilat
+      constructor: Trilat
+      base-args: ["@metric"]
+      run-groups:
+        ball:
+          args: []
+    kd:
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.kdtree
+      constructor: KDTree
+      base-args: ["@metric"]
+      run-groups:
+        ball:
+          args: *treeargs
+ 
+  angular:
+    puffinn:
+      docker-tag: ann-benchmarks-puffinn
+      module: ann_benchmarks.algorithms.puffinn
+      constructor: Puffinn
+      base-args: ["@metric"]
+      run-groups:
+        base:
+            args: [
+              [ 268435456, 536870912, 1073741824, 2147483648, 4294967296],
+              ['fht_crosspolytope'],
+            ]
+            query-args: [[0.1, 0.2, 0.5, 0.7, 0.9, 0.95, 0.99]]
+  
+  euclidean:
+    kgraph:
+      docker-tag: ann-benchmarks-kgraph
+      module: ann_benchmarks.algorithms.kgraph
+      constructor: KGraph
+      base-args: ["@metric"]
+      run-groups:
+        kgraph:
+          args: [ {'reverse': -1}, True] # XXX: hard-codes save_index as True
+          query-args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]]
+
+bit:
+  hamming:
+    kgraph:
+      docker-tag: ann-benchmarks-kgraph
+      module: ann_benchmarks.algorithms.kgraph
+      constructor: KGraph
+      base-args: ["euclidean"]
+      run-groups:
+        kgraph:
+          args: [[1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                 {'reverse': -1, "K": 200, "L": 300, "S": 20}, False]
+  jaccard:
+    bf:
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.bruteforce
+      constructor: BruteForceBLAS
+      base-args: ["@metric"]
+      run-groups:
+        base:
+          args: {}
