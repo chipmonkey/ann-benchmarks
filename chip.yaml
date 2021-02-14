@@ -52,6 +52,15 @@ float:
       run-groups:
         ball:
           args: &treeargs [[10, 20, 40, 100, 200, 400, 1000]]
+    trilatapprox:
+      disabled: true
+      docker-tag: ann-benchmarks-sklearn
+      module: ann_benchmarks.algorithms.trilat
+      constructor: TrilatApprox
+      base-args: ["@metric"]
+      run-groups:
+        ball:
+          args: []
     trilat:
       disabled: true
       docker-tag: ann-benchmarks-sklearn
